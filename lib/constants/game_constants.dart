@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class GameConstants {
   static const int boardSize = 4;
   static const int winningTile = 2048;
-  static const Duration moveAnimationDuration = Duration(milliseconds: 200);
-  static const Duration scaleAnimationDuration = Duration(milliseconds: 200);
+  static const Duration moveAnimationDuration = Duration(milliseconds: 550);
+  static const Duration scaleAnimationDuration = Duration(milliseconds: 300);
 
   // Colors
   static const Color backgroundColor = Color(0xFFFAF8EF);

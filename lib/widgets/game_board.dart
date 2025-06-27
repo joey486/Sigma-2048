@@ -3,7 +3,7 @@ import '../logic/tile_data.dart';
 import '../constants/game_constants.dart';
 import 'animated_tile.dart';
 
-class GameBoard extends StatelessWidget {
+class GameBoard extends StatefulWidget {
   final List<TileData> tiles;
   final Animation<double> scaleAnimation;
   final Function(String) onSwipe;
@@ -20,78 +20,97 @@ class GameBoard extends StatelessWidget {
   });
 
   @override
+  State<GameBoard> createState() => _GameBoardState();
+}
+
+class _GameBoardState extends State<GameBoard> {
+  Offset? _startPosition;
+  bool _directionSent = false;
+
+  @override
   Widget build(BuildContext context) {
+    double spacing = 8.0;
+    double boardWidth = MediaQuery.of(context).size.width - 32; // margin
+    double totalSpacing = spacing * (GameConstants.boardSize + 1);
+    double cellSize = (boardWidth - totalSpacing) / GameConstants.boardSize;
+
     return Center(
-      child: GestureDetector(
-        onPanEnd: (details) {
-          if (gameOver || isAnimating) return;
+      child: Container(
+        margin: const EdgeInsets.all(16),
+        width: boardWidth,
+        height: boardWidth,
+        decoration: BoxDecoration(
+          color: GameConstants.boardColor,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onPanStart: (_) {
+            _startPosition = null;
+          },
+          onPanUpdate: (details) {
+            if (widget.gameOver || widget.isAnimating) return;
 
-          final velocity = details.velocity.pixelsPerSecond;
-          final dx = velocity.dx;
-          final dy = velocity.dy;
+            if (_startPosition == null) {
+              _startPosition = details.localPosition;
+              return;
+            }
 
-          if (dx.abs() > dy.abs()) {
-            if (dx > 0) {
-              onSwipe('right');
-            } else {
-              onSwipe('left');
+            final delta = details.localPosition - _startPosition!;
+            final dx = delta.dx;
+            final dy = delta.dy;
+
+            if (dx.abs() > 30 || dy.abs() > 30) {
+              String? direction;
+              if (dx.abs() > dy.abs()) {
+                direction = dx > 0 ? 'right' : 'left';
+              } else {
+                direction = dy > 0 ? 'down' : 'up';
+              }
+
+              if (!_directionSent) {
+                _directionSent = true;
+                widget.onSwipe(direction);
+              }
             }
-          } else {
-            if (dy > 0) {
-              onSwipe('down');
-            } else {
-              onSwipe('up');
-            }
-          }
-        },
-        child: Container(
-          margin: const EdgeInsets.all(16),
-          width: MediaQuery.of(context).size.width - 32,
-          height: MediaQuery.of(context).size.width - 32,
-          decoration: BoxDecoration(
-            color: GameConstants.boardColor,
-            borderRadius: BorderRadius.circular(8),
-          ),
+          },
+          onPanEnd: (_) {
+            _startPosition = null;
+            _directionSent = false;
+          },
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Stack(
               children: [
                 // Background grid
-                GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: GameConstants.boardSize,
-                    crossAxisSpacing: 8,
-                    mainAxisSpacing: 8,
-                  ),
-                  itemCount: GameConstants.boardSize * GameConstants.boardSize,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: GameConstants.emptyCellColor,
-                        borderRadius: BorderRadius.circular(4),
+                ...List.generate(GameConstants.boardSize, (row) {
+                  return List.generate(GameConstants.boardSize, (col) {
+                    double left = col * (cellSize + spacing);
+                    double top = row * (cellSize + spacing);
+                    return Positioned(
+                      left: left,
+                      top: top,
+                      width: cellSize,
+                      height: cellSize,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: GameConstants.emptyCellColor,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
                       ),
                     );
-                  },
-                ),
-                // Animated tiles
-                ...tiles.map((tile) {
-                  // Calculate cell size based on container dimensions
-                  double containerWidth =
-                      MediaQuery.of(context).size.width -
-                      48; // margin + padding
-                  double cellSize =
-                      (containerWidth - 32) /
-                      GameConstants.boardSize; // account for spacing
-                  double spacing = 8.0;
+                  });
+                }).expand((e) => e),
 
-                  return AnimatedTile(
+                // Tiles
+                ...widget.tiles.map(
+                  (tile) => AnimatedTile(
                     tile: tile,
                     cellSize: cellSize,
                     spacing: spacing,
-                    scaleAnimation: scaleAnimation,
-                  );
-                }),
+                    scaleAnimation: widget.scaleAnimation,
+                  ),
+                ),
               ],
             ),
           ),

@@ -107,6 +107,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
         score += scoreGained;
         tiles = GameLogic.updateTilesFromBoard(board);
       });
+      addRandomTile();
 
       await _moveAnimationController.forward();
       _moveAnimationController.reset();
@@ -115,7 +116,6 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
         isAnimating = false;
       });
 
-      addRandomTile();
       checkGameStatus();
     }
   }
