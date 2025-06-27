@@ -8,11 +8,13 @@ import '../widgets/score_header.dart';
 import '../dialogs/game_dialogs.dart';
 
 class GameScreen extends StatefulWidget {
+  const GameScreen({super.key});
+
   @override
-  _GameScreenState createState() => _GameScreenState();
+  GameScreenState createState() => GameScreenState();
 }
 
-class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
+class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   List<List<int>> board = GameLogic.createEmptyBoard();
   List<TileData> tiles = [];
   int score = 0;

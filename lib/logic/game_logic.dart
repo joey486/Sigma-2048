@@ -48,7 +48,7 @@ class GameLogic {
         value: value,
         row: randomCell[0],
         col: randomCell[1],
-        id: 'tile_${tileIdCounter}',
+        id: 'tile_$tileIdCounter',
         isNew: true,
       );
     }
@@ -66,10 +66,12 @@ class GameLogic {
     // Check for possible merges
     for (int i = 0; i < GameConstants.boardSize; i++) {
       for (int j = 0; j < GameConstants.boardSize; j++) {
-        if (j < GameConstants.boardSize - 1 && board[i][j] == board[i][j + 1])
+        if (j < GameConstants.boardSize - 1 && board[i][j] == board[i][j + 1]) {
           return true;
-        if (i < GameConstants.boardSize - 1 && board[i][j] == board[i + 1][j])
+        }
+        if (i < GameConstants.boardSize - 1 && board[i][j] == board[i + 1][j]) {
           return true;
+        }
       }
     }
 

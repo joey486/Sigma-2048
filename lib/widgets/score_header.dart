@@ -5,8 +5,7 @@ class ScoreHeader extends StatelessWidget {
   final int score;
   final VoidCallback onNewGame;
 
-  const ScoreHeader({Key? key, required this.score, required this.onNewGame})
-    : super(key: key);
+  const ScoreHeader({super.key, required this.score, required this.onNewGame});
 
   @override
   Widget build(BuildContext context) {

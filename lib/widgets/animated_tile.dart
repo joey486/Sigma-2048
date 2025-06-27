@@ -9,12 +9,12 @@ class AnimatedTile extends StatelessWidget {
   final Animation<double> scaleAnimation;
 
   const AnimatedTile({
-    Key? key,
+    super.key,
     required this.tile,
     required this.cellSize,
     required this.spacing,
     required this.scaleAnimation,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class AnimatedTile extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 4,
                     offset: const Offset(0, 2),
                   ),

@@ -11,13 +11,13 @@ class GameBoard extends StatelessWidget {
   final bool isAnimating;
 
   const GameBoard({
-    Key? key,
+    super.key,
     required this.tiles,
     required this.scaleAnimation,
     required this.onSwipe,
     required this.gameOver,
     required this.isAnimating,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +91,7 @@ class GameBoard extends StatelessWidget {
                     spacing: spacing,
                     scaleAnimation: scaleAnimation,
                   );
-                }).toList(),
+                }),
               ],
             ),
           ),
