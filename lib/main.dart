@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'screens/game_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(Sigma2048());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Sigma2048 extends StatelessWidget {
+  const Sigma2048({super.key});
 
   @override
   Widget build(BuildContext context) {
