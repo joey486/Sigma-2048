@@ -1,4 +1,4 @@
-import './game_constants.dart';
+import '../constants/game_constants.dart';
 
 class MoveLogic {
   static int moveLeft(List<List<int>> board) {

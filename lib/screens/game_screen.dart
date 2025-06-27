@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../tile_data.dart';
-import './game_constants.dart';
-import './game_logic.dart';
-import './move_logic.dart';
-import './game_board.dart';
-import './score_header.dart';
-import './game_dialogs.dart';
+import '../logic/tile_data.dart';
+import '../constants/game_constants.dart';
+import '../logic/game_logic.dart';
+import '../logic/move_logic.dart';
+import '../widgets/game_board.dart';
+import '../widgets/score_header.dart';
+import '../dialogs/game_dialogs.dart';
 
 class GameScreen extends StatefulWidget {
   @override

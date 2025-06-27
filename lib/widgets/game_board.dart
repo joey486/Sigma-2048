@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import './tile_data.dart';
-import './game_constants.dart';
-import './animated_tile.dart';
+import '../logic/tile_data.dart';
+import '../constants/game_constants.dart';
+import 'animated_tile.dart';
 
 class GameBoard extends StatelessWidget {
   final List<TileData> tiles;

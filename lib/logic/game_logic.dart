@@ -1,6 +1,6 @@
 import 'dart:math';
-import './tile_data.dart';
-import './game_constants.dart';
+import 'tile_data.dart';
+import '../constants/game_constants.dart';
 
 class GameLogic {
   static List<List<int>> createEmptyBoard() {

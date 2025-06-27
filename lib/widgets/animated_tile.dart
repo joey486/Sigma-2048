@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './tile_data.dart';
-import './game_constants.dart';
+import '../logic/tile_data.dart';
+import '../constants/game_constants.dart';
 
 class AnimatedTile extends StatelessWidget {
   final TileData tile;

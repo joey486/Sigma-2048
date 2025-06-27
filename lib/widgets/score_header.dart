@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './game_constants.dart';
+import '../constants/game_constants.dart';
 
 class ScoreHeader extends StatelessWidget {
   final int score;
